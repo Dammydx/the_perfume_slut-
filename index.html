@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="style.css">
+<meta name="description" content="The perfume slut, your online perfume shop, quality perfumes to soothe your taste" />
+<meta property="og:title" content="The Perfume Slut" />
+<meta property="og:description" content="The perfume slut, your online perfume shop, quality perfumes to soothe your taste" />
+<meta property="og:image" content="https://theperfumeslut.shop/logo.jpg" />
+
+ <link rel="icon" href="favicon.ico" type="image/png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<title>The Perfume Slut</title>
+
+</head>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+Tawk_API.onLoad = function(){
+  if (window.innerWidth < 768) {
+    setTimeout(() => {
+      Tawk_API.minimize();
+    }, 2000);
+  }
+};
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/689f03a6a4fc79192a7c84e5/1j2miche6';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+<body>
+<nav>
+    <div class="logo">
+      <a href="#"><img src="logo2.PNG" alt="The Perfume Slut Logo"></a>
+    </div>
+
+<div class="nav-links" id="navLinks">
+  <span class="close-btn" id="closeBtn">&times;</span>
+  <a href="#">Home</a>
+  <a href="#About">About the Brand</a>
+  <div class="nav-item shop-dropdown">
+    <span class="shop-toggle">Shop ▾</span>
+    <div class="dropdown-menu" id="nav-category-links">
+      <!-- Category links will be dynamically inserted here -->
+    </div>
+  </div>
+  <a href="#contact">Contact Us</a>
+  <button class="cart-text-btn">View Cart <span class="cart-text-count">(0)</span></button>
+</div>
+<div class="nav-actions">
+  <button class="cart-icon-btn mobile-only-cart" aria-label="View Cart">
+    <i class="fas fa-shopping-cart"></i>
+    <span class="cart-badge">0</span>
+  </button>
+  <div class="hamburger" id="hamburger">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
+</nav>
+
+<div class="slideshow-container">
+
+  <div class="slide active" style="background-image: url('/logo%204.jpg');" ></div>
+
+  <div class="slide" style="background-image: url('/img/Perfume%20Powder%20Purple%20Background%2C%20Perfume%2C%20Background%2C%20Perfume%20Pictures%20Background%20Image%20And%20Wallpaper%20for%20Free%20Download.jfif'); background-position: center 25%;"></div>
+
+  <div class="slide" style="background-image: url('/img/floral%20fant.jpg'); background-position: center 25%;"></div>
+  
+  <div class="slide" style="background-image: url('/img/romantic%20everie.jpg'); background-position: center 25%;"></div>
+
+  <div class="slide" style="background-image: url('/img/autumn%20aura.jpg'); background-position: center 65%;"></div>
+
+  <div class="slide-content">
+      <div class="button-backdrop">
+          <button onclick="document.getElementById('shop').scrollIntoView({ behavior: 'smooth' })">SHOP NOW</button>
+      </div>
+  </div>
+</div>
+
+
+<!-- Heartbeat Animated Promo Banner -->
+<div class="promo-banner animated heartbeat" style="cursor: pointer;" onclick="document.getElementById('categoryModal').classList.add('show')">
+  Hurry now to explore our sweet deals! <span class="promo-link">Select a Category</span>
+</div>
+
+<style>
+  .promo-banner {
+    margin-top: 30px;
+    background: linear-gradient(135deg, #fff0f7, #ffe6f0);
+    color: #900048; /* Slightly deeper pink-red for elegance */
+    text-align: center;
+    padding: 16px 24px;
+    font-size: 1.15rem;
+    font-weight: 600;
+    font-family: 'Playfair Display', serif; /* Use the brand's elegant font */
+    border-radius: 15px; /* Softer rectangular shape */
+    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.6); /* Premium glassy border */
+    width: 90%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0;
+    animation: fancyEntrance 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    z-index: 300;
+    position: relative;
+  }
+
+  .promo-link {
+    color: #ff3399;
+    text-decoration: underline;
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+
+  .promo-link:hover {
+    color: #cc0066;
+  }
+
+  @media (max-width: 768px) {
+    .promo-banner {
+      font-size: 0.95rem;
+      padding: 15px 20px;
+      width: 90%;
+      border-radius: 15px; /* Much better for multi-line text */
+      line-height: 1.4;
+    }
+    .promo-link {
+      display: block; /* Drops the link neatly to a new line */
+      margin-top: 5px;
+    }
+  }
+
+  /* Entrance Animation */
+  @keyframes fancyEntrance {
+    0% {
+      opacity: 0;
+      transform: translateY(-30px) scale(0.98);
+    }
+    60% {
+      opacity: 1;
+      transform: translateY(5px) scale(1.02);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* Heartbeat Animation */
+  .heartbeat {
+    animation: fancyEntrance 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards, 
+               heartbeat 2s ease-in-out 1.6s infinite;
+  }
+
+  @keyframes heartbeat {
+    0%, 100% {
+      transform: scale(1);
+    }
+    14% {
+      transform: scale(1.03);
+    }
+    28% {
+      transform: scale(0.97);
+    }
+    42% {
+      transform: scale(1.03);
+    }
+    70% {
+      transform: scale(0.98);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .promo-banner {
+      font-size: 1rem;
+      padding: 14px 18px;
+    }
+  }
+</style>
+
+
+
+
+
+<section id="About">
+<div class="tit">
+  <img src="/img/WAVY_LINE-removebg-preview.png" alt=""><h3>ABOUT THE PERFUME SLUT</h3> <img src="/img/WAVY_LINE-removebg-preview.png" alt="">
+</div>
+  <div class="about-text">
+    <p>Birthed in 2022, <strong style="color: var(--gold);">Perfume Slut</strong> is a bold, unapologetic fragrance brand for scent lovers who know what they want and want to smell like it.<br class="desktop-break">
+       We specialize in authentic, internationally sourced perfumes, available in both boxed and tester forms to suit your style and budget.</p>
+    <p>At the heart of our brand is a fierce commitment to honesty and customer satisfaction. <strong style="color: var(--gold);">No imitations.</strong><br class="desktop-break">
+       No empty promises. Just real perfumes, real value, and real care for our customers.</p>
+  </div>
+</section>
+
+<section id="shop">
+    <h1 class="shop-title">Shop Our Scents</h1>
+    <div id="product-list">
+      <!-- Products will be loaded dynamically from Supabase -->
+    </div>
+</section>
+
+<!-- Modal for zoom effect -->
+<div id="imageModal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="modalImg">
+</div>
+
+<!-- Category Selector Modal -->
+<div id="categoryModal" class="modal">
+  <div class="category-modal-content">
+    <div class="modal-header">
+      <h2>Select Category</h2>
+      <span class="close-category">&times;</span>
+    </div>
+    <div id="categoryList" class="category-list">
+      <!-- Categories dynamically injected here -->
+    </div>
+  </div>
+</div>
+
+
+  <!-- Slide-out Cart Drawer -->
+  <div id="cartOverlay" class="cart-drawer-overlay"></div>
+  <div id="cartDrawer" class="cart-drawer">
+    <div class="cart-header">
+      <h2>Your Cart</h2>
+      <span id="closeCart" class="close-cart"><i class="fas fa-times"></i></span>
+    </div>
+    <div class="cart-body">
+      <div id="cartItems"></div>
+    </div>
+    <div class="cart-footer">
+      <div id="cartTotal">
+        <span>Total:</span>
+        <span>₦0</span>
+      </div>
+      <button id="checkoutButton">Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+
+<footer id="contact" class="footer">
+  <div class="footer-container">
+    <!-- Brand + Contact -->
+    <div class="footer-brand">
+      <h3 class="footer-logo" >Contact The Perfume Slut</h3>
+      <p class="contact-item"><i class="fas fa-phone-alt"></i> +234 7088975744</p>
+      <p class="contact-item">
+        <i class="fab fa-whatsapp"></i>
+        <a href="https://wa.me/+2347088975744" target="_blank">Chat on WhatsApp</a>
+      </p>
+      <p class="contact-item">
+        <i class="fab fa-instagram"></i>
+        <a href="https://www.instagram.com/theperfumeslut/" onclick="window.open('https://www.instagram.com/theperfumeslut/', '_blank', 'noopener,noreferrer'); return false;">@theperfumeslut</a>
+      </p>
+    </div>
+
+    <!-- Links -->
+    <div class="footer-links">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="#About">About Us</a></li>
+        <li><a href="#">Home</a></li>
+      
+      </ul>
+    </div>
+
+    <!-- Categories -->
+    <div class="footer-categories">
+      <h4>Perfume Categories</h4>
+      <ul id="footer-category-links">
+        <!-- Category links will be dynamically inserted here -->
+      </ul>
+    </div>
+  </div> 
+
+  <div class="footer-bottom">
+    <p>© 2025 The Perfume Slut. All rights reserved. <a href="admin-login.html">Admin</a></p>
+  </div>
+</footer>
+
+<!-- Font Awesome for icons -->
+<script src="https://kit.fontawesome.com/yourkitid.js" crossorigin="anonymous"></script>
+
+  <script type="module" src="js/shop.js"></script>
+</body>
+</html>

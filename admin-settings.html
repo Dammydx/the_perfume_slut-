@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Admin Panel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <h2>The Perfume Slut</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="admin-dashboard.html" class="nav-item">
+                    <span>📊</span> <span class="nav-item-text">Dashboard</span>
+                </a>
+                <a href="admin-categories.html" class="nav-item">
+                    <span>📁</span> <span class="nav-item-text">Categories</span>
+                </a>
+                <a href="admin-products.html" class="nav-item">
+                    <span>🛍️</span> <span class="nav-item-text">Products</span>
+                </a>
+                <a href="admin-settings.html" class="nav-item active">
+                    <span>⚙️</span> <span class="nav-item-text">Settings</span>
+                </a>
+                <a href="#" class="nav-item" onclick="AdminAuth.logout()">
+                    <span>🚪</span> <span class="nav-item-text">Logout</span>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-header">
+                <button class="mobile-nav-toggle" id="mobileNavToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <h1>Settings</h1>
+            </header>
+
+            <div class="content-section">
+                <h3>Admin Settings</h3>
+                <p>To change the admin password, go to your Supabase dashboard, navigate to Authentication > Users, and update the password for the <strong>admin@example.com</strong> user.</p>
+            </div>
+        </main>
+    </div>
+
+    <div class="mobile-nav-menu" id="mobileNavMenu">
+        <a href="admin-dashboard.html" class="nav-item"><span>📊</span> Dashboard</a>
+        <a href="admin-categories.html" class="nav-item"><span>📁</span> Categories</a>
+        <a href="admin-products.html" class="nav-item"><span>🛍️</span> Products</a>
+        <a href="admin-settings.html" class="nav-item active"><span>⚙️</span> Settings</a>
+        <a href="#" class="nav-item" onclick="AdminAuth.logout()"><span>🚪</span> Logout</a>
+    </div>
+
+    <script type="module">
+        import { AdminAuth } from './js/supabase.js';
+        import { setupMobileNav } from './js/admin-nav.js';
+
+        window.AdminAuth = AdminAuth;
+
+        // Initialize the page
+        (async () => {
+            await AdminAuth.requireAuth();
+            setupMobileNav();
+        })();
+    </script>
+</body>
+</html>
