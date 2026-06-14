@@ -7,29 +7,30 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
     <div class="admin-layout">
         <aside class="admin-sidebar">
             <div class="sidebar-header">
-                <h2>The Perfume Slut</h2>
+                <img src="logo2.PNG" alt="The Perfume Slut Logo" class="sidebar-logo">
             </div>
             <nav class="sidebar-nav">
                 <a href="admin-dashboard.html" class="nav-item active">
-                    <span>📊</span> <span class="nav-item-text">Dashboard</span>
+                    <i class='bx bxs-dashboard'></i> <span class="nav-item-text">Dashboard</span>
                 </a>
                 <a href="admin-categories.html" class="nav-item">
-                    <span>📁</span> <span class="nav-item-text">Categories</span>
+                    <i class='bx bxs-folder'></i> <span class="nav-item-text">Categories</span>
                 </a>
                 <a href="admin-products.html" class="nav-item">
-                    <span>🛍️</span> <span class="nav-item-text">Products</span>
+                    <i class='bx bxs-shopping-bags'></i> <span class="nav-item-text">Products</span>
                 </a>
                 <a href="admin-settings.html" class="nav-item">
-                    <span>⚙️</span> <span class="nav-item-text">Settings</span>
+                    <i class='bx bxs-cog'></i> <span class="nav-item-text">Settings</span>
                 </a>
                 <a href="#" class="nav-item" onclick="AdminAuth.logout()">
-                    <span>🚪</span> <span class="nav-item-text">Logout</span>
+                    <i class='bx bx-log-out'></i> <span class="nav-item-text">Logout</span>
                 </a>
             </nav>
         </aside>
@@ -41,7 +42,10 @@
                     <span></span>
                     <span></span>
                 </button>
-                <h1>Dashboard</h1>
+                <div class="header-title">
+                    <h1>Dashboard</h1>
+                    <p class="admin-greeting">Welcome back, Administrator</p>
+                </div>
                 <div class="header-actions">
                     <a href="index.html" target="_blank" class="btn btn-outline">View Website</a>
                 </div>
@@ -49,22 +53,22 @@
 
             <div class="content-section">
                 <div class="dashboard-stats">
-                    <div class="stat-card">
-                        <div class="stat-icon">🛍️</div>
+                    <div class="stat-card stat-products">
+                        <div class="stat-icon-wrapper"><i class='bx bx-shopping-bag'></i></div>
                         <div class="stat-info">
                             <h3 id="totalProducts">0</h3>
                             <p>Total Products</p>
                         </div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">📁</div>
+                    <div class="stat-card stat-categories">
+                        <div class="stat-icon-wrapper"><i class='bx bx-folder'></i></div>
                         <div class="stat-info">
                             <h3 id="totalCategories">0</h3>
                             <p>Total Categories</p>
                         </div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">⚠️</div>
+                    <div class="stat-card stat-stock">
+                        <div class="stat-icon-wrapper"><i class='bx bx-error-circle'></i></div>
                         <div class="stat-info">
                             <h3 id="outOfStockProducts">0</h3>
                             <p>Out of Stock</p>
@@ -88,11 +92,11 @@
     </div>
 
     <div class="mobile-nav-menu" id="mobileNavMenu">
-        <a href="admin-dashboard.html" class="nav-item active"><span>📊</span> Dashboard</a>
-        <a href="admin-categories.html" class="nav-item"><span>📁</span> Categories</a>
-        <a href="admin-products.html" class="nav-item"><span>🛍️</span> Products</a>
-        <a href="admin-settings.html" class="nav-item"><span>⚙️</span> Settings</a>
-        <a href="#" class="nav-item" onclick="AdminAuth.logout()"><span>🚪</span> Logout</a>
+        <a href="admin-dashboard.html" class="nav-item active"><i class='bx bxs-dashboard'></i> Dashboard</a>
+        <a href="admin-categories.html" class="nav-item"><i class='bx bxs-folder'></i> Categories</a>
+        <a href="admin-products.html" class="nav-item"><i class='bx bxs-shopping-bags'></i> Products</a>
+        <a href="admin-settings.html" class="nav-item"><i class='bx bxs-cog'></i> Settings</a>
+        <a href="#" class="nav-item" onclick="AdminAuth.logout()"><i class='bx bx-log-out'></i> Logout</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

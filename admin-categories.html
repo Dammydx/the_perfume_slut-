@@ -7,29 +7,30 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
     <div class="admin-layout">
         <aside class="admin-sidebar">
             <div class="sidebar-header">
-                <h2>The Perfume Slut</h2>
+                <img src="logo2.PNG" alt="The Perfume Slut Logo" class="sidebar-logo">
             </div>
             <nav class="sidebar-nav">
                 <a href="admin-dashboard.html" class="nav-item">
-                    <span>📊</span> <span class="nav-item-text">Dashboard</span>
+                    <i class='bx bxs-dashboard'></i> <span class="nav-item-text">Dashboard</span>
                 </a>
                 <a href="admin-categories.html" class="nav-item active">
-                    <span>📁</span> <span class="nav-item-text">Categories</span>
+                    <i class='bx bxs-folder'></i> <span class="nav-item-text">Categories</span>
                 </a>
                 <a href="admin-products.html" class="nav-item">
-                    <span>🛍️</span> <span class="nav-item-text">Products</span>
+                    <i class='bx bxs-shopping-bags'></i> <span class="nav-item-text">Products</span>
                 </a>
                 <a href="admin-settings.html" class="nav-item">
-                    <span>⚙️</span> <span class="nav-item-text">Settings</span>
+                    <i class='bx bxs-cog'></i> <span class="nav-item-text">Settings</span>
                 </a>
                 <a href="#" class="nav-item" onclick="AdminAuth.logout()">
-                    <span>🚪</span> <span class="nav-item-text">Logout</span>
+                    <i class='bx bx-log-out'></i> <span class="nav-item-text">Logout</span>
                 </a>
             </nav>
         </aside>
@@ -41,7 +42,10 @@
                     <span></span>
                     <span></span>
                 </button>
-                <h1>Categories</h1>
+                <div class="header-title">
+                    <h1>Categories</h1>
+                    <p class="admin-greeting">Organize your store collections</p>
+                </div>
                 <div class="header-actions">
                     <button class="btn btn-primary" onclick="showAddCategoryModal()">Add Category</button>
                 </div>
@@ -87,12 +91,29 @@
         </div>
     </div>
 
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom: none; padding-bottom: 0;">
+                <h3 style="color: var(--danger-red);"><i class='bx bx-error-circle' style="vertical-align: middle; margin-right: 5px;"></i> Confirm Deletion</h3>
+                <span class="close" onclick="closeDeleteModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this category? This cannot be undone and may affect products associated with it.</p>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+
     <div class="mobile-nav-menu" id="mobileNavMenu">
-        <a href="admin-dashboard.html" class="nav-item"><span>📊</span> Dashboard</a>
-        <a href="admin-categories.html" class="nav-item active"><span>📁</span> Categories</a>
-        <a href="admin-products.html" class="nav-item"><span>🛍️</span> Products</a>
-        <a href="admin-settings.html" class="nav-item"><span>⚙️</span> Settings</a>
-        <a href="#" class="nav-item" onclick="AdminAuth.logout()"><span>🚪</span> Logout</a>
+        <a href="admin-dashboard.html" class="nav-item"><i class='bx bxs-dashboard'></i> Dashboard</a>
+        <a href="admin-categories.html" class="nav-item active"><i class='bx bxs-folder'></i> Categories</a>
+        <a href="admin-products.html" class="nav-item"><i class='bx bxs-shopping-bags'></i> Products</a>
+        <a href="admin-settings.html" class="nav-item"><i class='bx bxs-cog'></i> Settings</a>
+        <a href="#" class="nav-item" onclick="AdminAuth.logout()"><i class='bx bx-log-out'></i> Logout</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -147,17 +168,31 @@
             document.getElementById('categoryModal').style.display = 'none';
         }
 
-        window.deleteCategory = async function(id) {
-            if (confirm('Are you sure you want to delete this category? This cannot be undone.')) {
-                try {
-                    await CategoriesAPI.delete(id);
-                    loadCategories();
-                } catch (error) {
-                    console.error('Error deleting category:', error);
-                    alert('Error deleting category. Products might be associated with it.');
-                }
-            }
+        let categoryToDeleteId = null;
+
+        window.closeDeleteModal = function() {
+            document.getElementById('deleteModal').style.display = 'none';
+            categoryToDeleteId = null;
         }
+
+        window.deleteCategory = function(id) {
+            categoryToDeleteId = id;
+            document.getElementById('deleteModal').style.display = 'flex';
+        }
+
+        document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
+            if (!categoryToDeleteId) return;
+            
+            try {
+                await CategoriesAPI.delete(categoryToDeleteId);
+                closeDeleteModal();
+                loadCategories();
+            } catch (error) {
+                console.error('Error deleting category:', error);
+                alert('Error deleting category. Products might be associated with it.');
+                closeDeleteModal();
+            }
+        });
 
         document.getElementById('categoryForm').addEventListener('submit', async (e) => {
             e.preventDefault();

@@ -7,29 +7,30 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
     <div class="admin-layout">
         <aside class="admin-sidebar">
             <div class="sidebar-header">
-                <h2>The Perfume Slut</h2>
+                <img src="logo2.PNG" alt="The Perfume Slut Logo" class="sidebar-logo">
             </div>
             <nav class="sidebar-nav">
                 <a href="admin-dashboard.html" class="nav-item">
-                    <span>📊</span> <span class="nav-item-text">Dashboard</span>
+                    <i class='bx bxs-dashboard'></i> <span class="nav-item-text">Dashboard</span>
                 </a>
                 <a href="admin-categories.html" class="nav-item">
-                    <span>📁</span> <span class="nav-item-text">Categories</span>
+                    <i class='bx bxs-folder'></i> <span class="nav-item-text">Categories</span>
                 </a>
                 <a href="admin-products.html" class="nav-item active">
-                    <span>🛍️</span> <span class="nav-item-text">Products</span>
+                    <i class='bx bxs-shopping-bags'></i> <span class="nav-item-text">Products</span>
                 </a>
                 <a href="admin-settings.html" class="nav-item">
-                    <span>⚙️</span> <span class="nav-item-text">Settings</span>
+                    <i class='bx bxs-cog'></i> <span class="nav-item-text">Settings</span>
                 </a>
                 <a href="#" class="nav-item" onclick="AdminAuth.logout()">
-                    <span>🚪</span> <span class="nav-item-text">Logout</span>
+                    <i class='bx bx-log-out'></i> <span class="nav-item-text">Logout</span>
                 </a>
             </nav>
         </aside>
@@ -41,13 +42,30 @@
                     <span></span>
                     <span></span>
                 </button>
-                <h1>Products</h1>
+                <div class="header-title">
+                    <h1>Products</h1>
+                    <p class="admin-greeting">Manage your inventory</p>
+                </div>
                 <div class="header-actions">
                     <button class="btn btn-primary" onclick="showAddProductModal()">Add Product</button>
                 </div>
             </header>
 
             <div class="content-section">
+                <!-- Custom Category Filter Dropdown -->
+                <div class="filter-bar">
+                    <div class="filter-label">Select Category:</div>
+                    <div class="custom-dropdown-container" id="categoryDropdownContainer">
+                        <div class="custom-dropdown-selected" onclick="toggleCategoryDropdown(event)">
+                            <span id="dropdownSelectedText">All Categories</span>
+                            <i class='bx bx-chevron-down'></i>
+                        </div>
+                        <div class="custom-dropdown-options" id="dropdownOptions">
+                            <!-- Options injected via JS -->
+                        </div>
+                    </div>
+                </div>
+
                 <div class="table-container">
                     <table class="admin-table">
                         <thead>
@@ -57,6 +75,7 @@
                                 <th>Category</th>
                                 <th>Price</th>
                                 <th>Stock</th>
+                                <th>Date</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -135,14 +154,32 @@
                 </div>
             </form>
         </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom: none; padding-bottom: 0;">
+                <h3 style="color: var(--danger-red);"><i class='bx bx-error-circle' style="vertical-align: middle; margin-right: 5px;"></i> Confirm Deletion</h3>
+                <span class="close" onclick="closeDeleteModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this product? This action cannot be undone.</p>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
     </div>
 
     <div class="mobile-nav-menu" id="mobileNavMenu">
-        <a href="admin-dashboard.html" class="nav-item"><span>📊</span> Dashboard</a>
-        <a href="admin-categories.html" class="nav-item"><span>📁</span> Categories</a>
-        <a href="admin-products.html" class="nav-item active"><span>🛍️</span> Products</a>
-        <a href="admin-settings.html" class="nav-item"><span>⚙️</span> Settings</a>
-        <a href="#" class="nav-item" onclick="AdminAuth.logout()"><span>🚪</span> Logout</a>
+        <a href="admin-dashboard.html" class="nav-item"><i class='bx bxs-dashboard'></i> Dashboard</a>
+        <a href="admin-categories.html" class="nav-item"><i class='bx bxs-folder'></i> Categories</a>
+        <a href="admin-products.html" class="nav-item active"><i class='bx bxs-shopping-bags'></i> Products</a>
+        <a href="admin-settings.html" class="nav-item"><i class='bx bxs-cog'></i> Settings</a>
+        <a href="#" class="nav-item" onclick="AdminAuth.logout()"><i class='bx bx-log-out'></i> Logout</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -153,12 +190,20 @@
         window.AdminAuth = AdminAuth;
         let editingProductId = null;
 
+        let allProducts = [];
+
         async function loadCategories() {
             try {
                 const categories = await CategoriesAPI.getAll();
                 const select = document.getElementById('productCategory');
                 select.innerHTML = '<option value="">Select Category</option>' +
                     categories.map(cat => `<option value="${cat.id}">${cat.name}</option>`).join('');
+                
+                const filterOptions = document.getElementById('dropdownOptions');
+                if (filterOptions) {
+                    filterOptions.innerHTML = `<div class="dropdown-option active" onclick="selectCategory('all', 'All Categories', this)">All Categories</div>` +
+                        categories.map(cat => `<div class="dropdown-option" onclick="selectCategory('${cat.id}', '${cat.name.replace(/'/g, "\\'")}', this)">${cat.name}</div>`).join('');
+                }
             } catch (error) {
                 console.error('Error loading categories:', error);
             }
@@ -166,37 +211,75 @@
 
         async function loadProducts() {
             try {
-                const products = await ProductsAPI.getAll();
-                const tbody = document.getElementById('productsTableBody');
-                
-                tbody.innerHTML = products.map(product => `
-                    <tr>
-                        <td data-label="Image">
-                            ${product.image_url ? 
-                                `<img src="${product.image_url}" alt="${product.name}" class="product-thumb" loading="lazy">` : 
-                                '<div class="no-image">No Image</div>'
-                            }
-                        </td>
-                        <td data-label="Name">${product.name}</td>
-                        <td data-label="Category">${product.categories ? product.categories.name : 'Uncategorized'}</td>
-                        <td data-label="Price">₦${parseFloat(product.price).toLocaleString()}</td>
-                        <td data-label="Stock">
-                            <span class="stock-badge ${product.in_stock ? 'in-stock' : 'out-of-stock'}">
-                                ${product.in_stock ? 'In Stock' : 'Sold Out'}
-                            </span>
-                        </td>
-                        <td data-label="Actions">
-                            <div class="action-buttons">
-                                <button class="btn btn-sm btn-secondary" onclick="editProduct('${product.id}')">Edit</button>
-                                <button class="btn btn-sm btn-danger" onclick="deleteProduct('${product.id}')">Delete</button>
-                            </div>
-                        </td>
-                    </tr>
-                `).join('');
+                allProducts = await ProductsAPI.getAll();
+                renderProducts(allProducts);
             } catch (error) {
                 console.error('Error loading products:', error);
                 alert('Error loading products');
             }
+        }
+
+        window.toggleCategoryDropdown = function(e) {
+            e.stopPropagation();
+            document.getElementById('categoryDropdownContainer').classList.toggle('active');
+        }
+
+        window.selectCategory = function(id, name, element) {
+            document.getElementById('dropdownSelectedText').textContent = name;
+            
+            document.querySelectorAll('.dropdown-option').forEach(el => el.classList.remove('active'));
+            if (element) element.classList.add('active');
+            
+            document.getElementById('categoryDropdownContainer').classList.remove('active');
+            
+            if (id === 'all') {
+                renderProducts(allProducts);
+            } else {
+                const filtered = allProducts.filter(p => p.category_id == id);
+                renderProducts(filtered);
+            }
+        }
+
+        document.addEventListener('click', function(e) {
+            const dropdown = document.getElementById('categoryDropdownContainer');
+            if (dropdown && !dropdown.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        function renderProducts(products) {
+            const tbody = document.getElementById('productsTableBody');
+            
+            if (!products || products.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px; color: var(--text-muted);">No products found in this category.</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = products.map(product => `
+                <tr>
+                    <td data-label="Image">
+                        ${product.image_url ? 
+                            `<img src="${product.image_url}" alt="${product.name}" class="product-thumb" loading="lazy">` : 
+                            '<div class="no-image">No Image</div>'
+                        }
+                    </td>
+                    <td data-label="Name">${product.name}</td>
+                    <td data-label="Category">${product.categories ? product.categories.name : 'Uncategorized'}</td>
+                    <td data-label="Price">₦${parseFloat(product.price).toLocaleString()}</td>
+                    <td data-label="Stock">
+                        <span class="stock-badge ${product.in_stock ? 'in-stock' : 'out-of-stock'}">
+                            ${product.in_stock ? 'In Stock' : 'Sold Out'}
+                        </span>
+                    </td>
+                    <td data-label="Date">${product.created_at ? new Date(product.created_at).toLocaleDateString() : '-'}</td>
+                    <td data-label="Actions">
+                        <div class="action-buttons">
+                            <button class="btn btn-sm btn-secondary" onclick="editProduct('${product.id}')">Edit</button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteProduct('${product.id}')">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
         }
         
         const imagePreview = document.getElementById('imagePreview');
@@ -250,17 +333,31 @@
             document.getElementById('productModal').style.display = 'none';
         }
 
-        window.deleteProduct = async function(id) {
-            if (confirm('Are you sure you want to delete this product?')) {
-                try {
-                    await ProductsAPI.delete(id);
-                    loadProducts();
-                } catch (error) {
-                    console.error('Error deleting product:', error);
-                    alert('Error deleting product');
-                }
-            }
+        let productToDeleteId = null;
+
+        window.closeDeleteModal = function() {
+            document.getElementById('deleteModal').style.display = 'none';
+            productToDeleteId = null;
         }
+
+        window.deleteProduct = function(id) {
+            productToDeleteId = id;
+            document.getElementById('deleteModal').style.display = 'flex';
+        }
+
+        document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
+            if (!productToDeleteId) return;
+            
+            try {
+                await ProductsAPI.delete(productToDeleteId);
+                closeDeleteModal();
+                loadProducts();
+            } catch (error) {
+                console.error('Error deleting product:', error);
+                alert('Error deleting product');
+                closeDeleteModal();
+            }
+        });
 
         document.getElementById('productImage').addEventListener('change', function(e) {
             const file = e.target.files[0];

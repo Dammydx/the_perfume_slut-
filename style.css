@@ -139,6 +139,7 @@ nav {
 .shop-dropdown {
   position: relative;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent; /* Remove weird tap highlight on mobile */
 }
 
 .dropdown-menu {
@@ -158,8 +159,10 @@ nav {
   max-height: 65vh; /* Allows scrolling on PC */
   overflow-y: auto;
 }
-.shop-dropdown:hover .dropdown-menu {
-  display: flex;
+@media (hover: hover) and (pointer: fine) {
+  .shop-dropdown:hover .dropdown-menu {
+    display: flex;
+  }
 }
 
 .dropdown-menu a {
